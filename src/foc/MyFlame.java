@@ -20,14 +20,21 @@ public class MyFlame extends JFrame {
 
     private BufferedImage normalImage;
     private BufferedImage convolutedImage;
+    private BufferedImage background;
     private Flame normalFlame;
     private Flame convolutedFlame;
 
     private FlamePalete FP = createFlamePalete();
 
+    Viewer viewer;
+    
     public MyFlame() throws IOException {
         setWindowParams();
-
+        
+        //edificios.jpg
+        //valley.jpg
+        //sailorMoon.png
+        //obito.jpg
         File backgroundFile = new File("src/edificios.jpg");
 
         // ----
@@ -42,7 +49,8 @@ public class MyFlame extends JFrame {
         normalFlame.setFlamePalete(FP);
 
         // ----
-        convolutedFlame = new Flame(900, 500, normalImage);
+        background = ImageIO.read(backgroundFile);
+        convolutedFlame = new Flame(900, 500, background);
         convolutedFlame.setFlamePalete(FP);
 
         ControlPanel cp1 = new ControlPanel(200, 700, this, FP);
@@ -50,7 +58,7 @@ public class MyFlame extends JFrame {
         c.gridx = 0;
         this.add(cp1, c);
 
-        Viewer viewer = new Viewer(900, 700, normalImage, convolutedImage, normalFlame, convolutedFlame);
+        viewer = new Viewer(900, 700, normalImage, convolutedImage, normalFlame, convolutedFlame);
         c = new GridBagConstraints();
         c.gridx = 1;
         c.gridwidth = 1;
@@ -62,6 +70,11 @@ public class MyFlame extends JFrame {
         new Thread(viewer).start();
 
         this.pack();
+    }
+    
+    public void reConvolutionate(int sensivility) {
+        viewer.reConvolutionate(sensivility);
+        convolutedFlame.reConvolutionate(sensivility);
     }
 
     public void setFireMsSpeed(int ms) {

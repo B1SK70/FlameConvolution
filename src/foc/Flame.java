@@ -27,13 +27,16 @@ public class Flame extends BufferedImage implements Runnable {
     private double heatLoss = 1.5;
     private int fireMsSpeed = 25;
 
+    //Convolution parameters
+    private int convolutionSensivility = 100;
+
     public Flame(int w, int h, BufferedImage background) {
         super(w, h, BufferedImage.TYPE_INT_ARGB);
         this.w = w;
         this.h = h;
         if (background != null) {
             this.background = resize(background, w, h);
-            flamables = new Convolution(this.background).getFlamables(100);
+            flamables = new Convolution(this.background).getFlamables(convolutionSensivility);
             if (flamables.size() > 0) {
                 backgroundShapeDetected = true;
             }
@@ -81,6 +84,10 @@ public class Flame extends BufferedImage implements Runnable {
     public void restart() {
         heatMap = new int[w][h];
         updateImage();
+    }
+
+    public void reConvolutionate(int sensivility) {
+        flamables = new Convolution(this.background).getFlamables(sensivility);
     }
 
     private void sparks() {

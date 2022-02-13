@@ -192,7 +192,6 @@ public class ControlPanel extends JPanel{
         this.add(colorPalete,c);
         
         FlamePaleteDisplayer fpd = new FlamePaleteDisplayer( this, FP );
-
         
         c = new GridBagConstraints();
         c.gridx = 1;
@@ -201,7 +200,41 @@ public class ControlPanel extends JPanel{
         c.gridwidth = 2;
         
         this.add(fpd,c);
- 
+        
+        
+        //Convolution
+        JLabel convolutionSensivility = new JLabel("Convolution edge sensility");
+        convolutionSensivility.setPreferredSize(new Dimension(160, 50));
+        
+        c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = 13;
+        c.gridheight = 1;
+        c.gridwidth = 2;
+        
+        this.add(convolutionSensivility,c);
+        
+        JSlider convolutionSensitivity = new JSlider(JSlider.HORIZONTAL, 15, 240, 100);
+        convolutionSensitivity.setPreferredSize(new Dimension(160, 40));
+        convolutionSensitivity.setMajorTickSpacing(50);
+        convolutionSensitivity.setPaintTicks(true);
+        convolutionSensitivity.setPaintLabels(true);
+        convolutionSensitivity.addChangeListener( new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+                programa.reConvolutionate(convolutionSensitivity.getValue());
+            }
+        });
+        
+        
+        c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = 14;
+        c.gridheight = 2;
+        c.gridwidth = 2;
+        
+        this.add(convolutionSensitivity,c);
+        
+        
     }
     
 }

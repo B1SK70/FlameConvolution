@@ -31,6 +31,10 @@ public class Viewer extends Canvas implements Runnable {
         setSize(w, h);
     }
 
+    public void reConvolutionate(int sensivility) {
+        convolutedImage = new Convolution(this.normalImage).reConvolutinate(sensivility);
+    }
+    
     public void paint() {
 
         bs = this.getBufferStrategy();
