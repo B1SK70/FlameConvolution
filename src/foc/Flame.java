@@ -20,6 +20,9 @@ public class Flame extends BufferedImage implements Runnable {
     private ArrayList<String> flamables;
     private boolean backgroundShapeDetected = false;
 
+    
+    
+    
     boolean paused = false;
 
     //Parametrizables
@@ -118,6 +121,7 @@ public class Flame extends BufferedImage implements Runnable {
 
                 //IF ( HEAT > 0 )
                 if ((int) ((heatMap[x - 1][y + 1] + heatMap[x][y + 1] + heatMap[x + 1][y + 1] + (heatMap[x][y] * 0.3)) / (3 + 0.3) - 1) > 0) {
+                    //Calculate new heat
                     newHeatMapStatus[x][y] = (int) ((heatMap[x - 1][y + 1] + heatMap[x][y + 1] + heatMap[x + 1][y + 1] + (heatMap[x][y] * 0.3)) / (3 + 0.3) - heatLoss);
                 }
 
@@ -128,12 +132,12 @@ public class Flame extends BufferedImage implements Runnable {
 
     private void updateImage() {
 
+        rawFlames = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        
         if (background != null) {
             unfinishedFlame.getGraphics().drawImage(background, 0, 0, null);
-            rawFlames = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         } else {
             unfinishedFlame = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-            rawFlames = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         }
 
         for (int x = 0; x < w; x++) {
